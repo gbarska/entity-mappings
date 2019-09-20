@@ -6,11 +6,9 @@ namespace SamuraiApp.Domain
     public class Samurai
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public List<Quote> Quotes { get; set; }
-
+        public PersonFullName BetterName { get; set; }
         //many to many relationship
         public List<SamuraiBattle> SamuraiBattles { get; set; }
 

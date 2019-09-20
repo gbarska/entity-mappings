@@ -17,15 +17,109 @@ namespace SamuraiApp.UI
         static void Main(string[] args)
         {
             
-            // PrePopulateSamuraisAndBattles();          
-            
-            // JoinBattleAndSamurai();
-            
-            // AddSamuraiShadowProperty();
-            
-            // RetrieveSamuraisCreatedInPastWeek();
+            //PrePopulateSamuraisAndBattles();
+            //JoinBattleAndSamurai();
+            //EnlistSamuraiIntoABattle();
+            //EnlistSamuraiIntoABattleUntracked();
+            //AddNewSamuraiViaDisconnectedBattleObject();
+            //GetSamuraiWithBattles();
+            //GetBattlesForSamuraiInMemory();
+            //RemoveJoinBetweenSamuraiAndBattleSimple();
+            //RemoveBattleFromSamurai();
+            //RemoveBattleFromSamuraiWhenDisconnected();
+            //AddNewSamuraiWithSecretIdentity();
+            //AddSecretIdentityUsingSamuraiId();
+            //AddSecretIdentityToExistingSamurai();
+            //EditASecretIdentity();
+            // ReplaceASecretIdentity();
+            //ReplaceASecretIdentityNotTracked();
+            //ReplaceSecretIdentityNotInMemory();
+            // CreateSamuraiWithBetterName();
+            //  ReplaceBetterName();
+            CreateAndFixUpNullBetterName();
         }
 
+    private static void CreateSamuraiWithBetterName()
+        {
+            var samurai = new Samurai
+            {
+                Name = "Jack le Black",
+                BetterName = PersonFullName.Create("Jack", "Black")
+            };
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
+        }
+
+        private static void CreateAndFixUpNullBetterName()
+        {
+            _context.Samurais.Add(new Samurai { Name = "Chrisjen" });
+            _context.SaveChanges();
+            // _context = new AppDbContext();
+            
+            // var persistedSamurai = _context.Samurais.FirstOrDefault(s => s.Name == "Chrisjen");
+            
+            // if (persistedSamurai is null) { return; }
+            // if (persistedSamurai.BetterName.IsEmpty())
+            // {
+            //     persistedSamurai.BetterName = null;
+            // }
+        }
+    
+        private static void ReplaceBetterName()
+        {
+            var samurai = _context.Samurais.FirstOrDefault(s => s.Name == "Ruronin");
+            //workaround for the second problem
+            _context.Entry(samurai).Reference(s => s.BetterName).TargetEntry.State = EntityState.Detached;
+            samurai.BetterName = PersonFullName.Create("Shohreh", "Aghdashloo");
+            _context.Samurais.Update(samurai);
+            _context.SaveChanges();
+        }
+
+        private static void RetrieveAndUpdateBetterName()
+        {
+           var samurai = _context.Samurais.FirstOrDefault(s => s.BetterName.SurName == "Black");
+        //    samurai.BetterName.GivenName = "Jill";
+           _context.SaveChanges();
+        }
+
+        private static void GetAllSamurais()
+        {
+            var allsamurais = _context.Samurais.ToList();
+        }
+        private static void CreateSamurai()
+        {
+            var samurai = new Samurai { Name = "Ronin" };
+            _context.Samurais.Add(samurai);
+            _context.Entry(samurai).Property("Created").CurrentValue = DateTime.Now;
+            _context.Entry(samurai).Property("LastModified").CurrentValue = DateTime.Now;
+            _context.SaveChanges();
+        }
+        private static void ReplaceSecretIdentityNotInMemory()
+        {
+            var samurai = _context.Samurais.FirstOrDefault(s => s.SecretIdentity != null);
+            samurai.SecretIdentity = new SecretIdentity { RealName = "Bobbie Draper" };
+            _context.SaveChanges(); 
+        } 
+        private static void ReplaceASecretIdentityNotTracked()
+        {
+            Samurai samurai;
+            using (var separateOperation = new AppDbContext())
+            {
+                samurai = separateOperation.Samurais.Include(s => s.SecretIdentity)
+                                           .FirstOrDefault(s => s.Id == 1);
+            }
+            samurai.SecretIdentity = new SecretIdentity { RealName = "Sampson" };
+            _context.Samurais.Attach(samurai);
+            //this will fail...EF Core tries to insert a duplicate samuraiID FK
+            _context.SaveChanges();
+        }
+        private static void ReplaceASecretIdentity()
+        {
+            var samurai = _context.Samurais.Include(s => s.SecretIdentity)
+                                  .FirstOrDefault(s => s.Id == 1);
+            samurai.SecretIdentity = new SecretIdentity { RealName = "Sampson" };
+            _context.SaveChanges();
+        }
         private static void GetSamuraiWithBattles()
         {
             var samuraiWithBattles = 
@@ -50,8 +144,74 @@ namespace SamuraiApp.UI
             //the context itself handles the query 
             _context.Add(sbJoin);
             _context.SaveChanges();
+        }             
+        private static void EditASecretIdentity()
+        {
+            var samurai = _context.Samurais.Include(s => s.SecretIdentity)
+                                  .FirstOrDefault(s => s.Id == 1);
+            samurai.SecretIdentity.RealName = "T'Challa";
+            _context.SaveChanges();
         }
-
+        private static void AddSecretIdentityToExistingSamurai()
+        {
+            Samurai samurai;
+            using (var separateOperation = new AppDbContext())
+            {
+                samurai = _context.Samurais.Find(2);
+            }
+            samurai.SecretIdentity = new SecretIdentity { RealName = "Julia" };
+            _context.Samurais.Attach(samurai);
+            _context.SaveChanges();
+        }
+        private static void AddSecretIdentityUsingSamuraiId()
+        {
+            //Note: SamuraiId 1 does not have a secret identity yet!
+            var identity = new SecretIdentity { SamuraiId = 1,  };
+            _context.Add(identity);
+            _context.SaveChanges();
+        }   
+        private static void AddNewSamuraiWithSecretIdentity()
+        {
+            var samurai = new Samurai { Name = "Jina Ujichika" };
+            samurai.SecretIdentity = new SecretIdentity { RealName = "Julie" };
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
+        }
+        private static void RemoveBattleFromSamuraiWhenDisconnected()
+        {
+            //Goal:Remove join between Shichirōji(Id=3) and Battle of Okehazama (Id=1)
+            Samurai samurai;
+            using (var separateOperation = new AppDbContext())
+            {
+                samurai = separateOperation.Samurais.Include(s => s.SamuraiBattles)
+                                                    .ThenInclude(sb => sb.Battle)
+                                           .SingleOrDefault(s => s.Id == 3);
+            }
+            var sbToRemove = samurai.SamuraiBattles.SingleOrDefault(sb => sb.BattleId == 1);
+            samurai.SamuraiBattles.Remove(sbToRemove);
+            //_context.Attach(samurai);
+            //_context.ChangeTracker.DetectChanges();
+            _context.Remove(sbToRemove);
+            _context.SaveChanges();
+        }
+        private static void RemoveBattleFromSamurai()
+        {
+            //Goal:Remove join between Shichirōji(Id=3) and Battle of Okehazama (Id=1)
+            var samurai = _context.Samurais.Include(s => s.SamuraiBattles)
+                                           .ThenInclude(sb => sb.Battle)
+                                  .SingleOrDefault(s => s.Id == 3);
+             var sbToRemove = samurai.SamuraiBattles.SingleOrDefault(sb => sb.BattleId == 1);
+             samurai.SamuraiBattles.Remove(sbToRemove); //remove via List<T>
+             //_context.Remove(sbToRemove); //remove using DbContext
+             _context.ChangeTracker.DetectChanges(); //here for debugging
+             _context.SaveChanges();
+        }
+        private static void RemoveJoinBetweenSamuraiAndBattleSimple()
+        {
+            var join = new SamuraiBattle { BattleId = 1, SamuraiId = 8 };
+            _context.Remove(join);
+            _context.SaveChanges();
+        }
         private static void EnlistSamuraiIntoABattle()
         {
             var battle = _context.Battles.Find(1);
@@ -59,7 +219,6 @@ namespace SamuraiApp.UI
             battle.SamuraiBattles.Add(new SamuraiBattle{SamuraiId = 3});
             _context.SaveChanges();
         }
-
         private static void EnlistSamuraiIntoABattleUntracked()
         {
             Battle battle;
@@ -74,8 +233,7 @@ namespace SamuraiApp.UI
             _context.ChangeTracker.DetectChanges();//show debugging info before operation is done
             _context.SaveChanges();
         }
-
-         private static void AddNewSamuraiViaDisconnectedBattleObject()
+        private static void AddNewSamuraiViaDisconnectedBattleObject()
         {
             Battle battle;
             
@@ -91,7 +249,6 @@ namespace SamuraiApp.UI
             // _context.ChangeTracker.DetectChanges();//show debugging info before operation is done
             _context.SaveChanges();
         }       
-
         private static void AddSamuraiShadowProperty()
         {
             var samurai = new Samurai { Name="Bushido" };
@@ -104,22 +261,30 @@ namespace SamuraiApp.UI
             _context.Entry(samurai).Property("LastModified").CurrentValue= timestamp;
             _context.SaveChanges();           
        }
-
         private static void RetrieveSamuraisCreatedInPastWeek()
         {
             var oneWeekAgo = DateTime.Now.AddDays(-7);
 
             var newSamurais = _context.Samurais
-                                .where(s => EF.Property<DateTime>(s,"Created") >= oneWeekAgo)
+                                .Where(s => EF.Property<DateTime>(s,"Created") >= oneWeekAgo)
                                 .ToList();
                                 
             //objectwith the field of shadow property
             var newSamuraisObject = _context.Samurais
-                                .where(s => EF.Property<DateTime>(s,"Created") >= oneWeekAgo)
+                                .Where(s => EF.Property<DateTime>(s,"Created") >= oneWeekAgo)
                                 .Select(s => new { s.Id, s.Name, Created=EF.Property<DateTime>(s,"Created")})
                                 .ToList();                  
         }
-       
+        private static void CreateThenEditSamuraiWithQuote()
+        {
+            var samurai = new Samurai { Name = "Ronin" };
+            var quote = new Quote { Text = "Aren't I MARVELous?" };
+            samurai.Quotes.Add(quote);
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
+            quote.Text += " See what I did there?";
+            _context.SaveChanges();
+        }
         private static void PrePopulateSamuraisAndBattles()
         {
             //working on DbContext that figures out what to do (where to insert)

@@ -51,7 +51,14 @@ namespace SamuraiApp.Data
 
 
         //builder.Entity<Samurai>().HasOne(i=> i.SecretIdentity).WithOne().HasForeignKey<SecretIdentity>(i=>i.SamuraiFK)
+            
+            //with this notation we say to EF that the owned types must be placed into a separeted table 
+            //and entity will create a new table with samurai fk instead of adding columns in samurai table
+             // modelBuilder.Entity<Samurai>().OwnsOne(s => s.BetterName).ToTable("BetterNames");
 
+            //with this approach EF wiill just add the columns into samurai table
+            builder.Entity<Samurai>().OwnsOne(s => s.BetterName).Property(b => b.GivenName).HasColumnName("GivenName");
+            builder.Entity<Samurai>().OwnsOne(s => s.BetterName).Property(b => b.SurName).HasColumnName("SurName");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -65,47 +72,33 @@ namespace SamuraiApp.Data
             
         }
 
-        public override int SaveChanges()
+         public override int SaveChanges()
         {
-            //overrides the SaveChanges method to populate the shadow props for every entity
-            
             ChangeTracker.DetectChanges();
-            
-            var timeStamp =  DateTime.Now;
+            var timestamp = DateTime.Now;
 
             foreach (var entry in ChangeTracker.Entries()
-                .Where( e => e.State == EntityState.Added || e.State == EntityState.Modified))
-                
+                .Where(e => (e.State == EntityState.Added || e.State == EntityState.Modified)
+                             && !e.Metadata.IsOwned())
+                             )
             {
-                entry.Property("LastModified").CurrentValue= timeStamp;
-
-                if(entry.State == EntityState.Added)
+                entry.Property("LastModified").CurrentValue = timestamp;
+                if (entry.State==EntityState.Added)
                 {
-                    entry.Property("Created").CurrentValue= timeStamp;
+                    entry.Property("Created").CurrentValue = timestamp;
+                }
+
+                if (entry.Entity is Samurai)
+                {
+                    if (entry.Reference("BetterName").CurrentValue == null)
+                    {
+                        entry.Reference("BetterName").CurrentValue = PersonFullName.Empty();
+                    }
+                    entry.Reference("BetterName").TargetEntry.State = entry.State;
                 }
             }
             return base.SaveChanges();
         }
+       
     }
-
-    // public class ContextFactory : IDesignTimeDbContextFactory<AppDbContext>
-    // {
-    //       public static readonly LoggerFactory MyConsoleLoggerFactory
-    //      = new LoggerFactory(new [] {
-    //             new ConsoleLoggerProvider((category, level)
-    //              => category == DbLoggerCategory.Database.Command.Name 
-    //              && level == LogLevel.Information, true )});
-    //     public AppDbContext CreateDbContext(string[] args)
-    //     {
-    //         var config = new ConfigurationBuilder().Build();
-    //         var builder = new DbContextOptionsBuilder<AppDbContext>();
-    //         var connString = "Server=localhost;Port=3306;Database=samurai;Uid=gbarska;Pwd=password;";
-    //         builder
-    //         .UseLoggerFactory(MyConsoleLoggerFactory)
-    //         .UseMySql(connString)
-    //         .EnableSensitiveDataLogging(true);
-            
-    //         return new AppDbContext(builder.Options);
-    //     }
-    // }
 }
