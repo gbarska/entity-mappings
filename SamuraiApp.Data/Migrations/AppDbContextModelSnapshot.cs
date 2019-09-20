@@ -92,6 +92,22 @@ namespace SamuraiApp.Data.Migrations
                     b.ToTable("SamuraiBattle");
                 });
 
+            modelBuilder.Entity("SamuraiApp.Domain.SamuraiStat", b =>
+                {
+                    b.Property<int>("SamuraiId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EarliestBattle");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("NumberOfBattles");
+
+                    b.HasKey("SamuraiId");
+
+                    b.ToTable("SamuraiBattleStats");
+                });
+
             modelBuilder.Entity("SamuraiApp.Domain.SecretIdentity", b =>
                 {
                     b.Property<int>("Id")

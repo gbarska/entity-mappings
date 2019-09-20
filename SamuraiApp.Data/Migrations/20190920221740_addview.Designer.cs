@@ -9,8 +9,8 @@ using SamuraiApp.Data;
 namespace SamuraiApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190920024522_new")]
-    partial class @new
+    [Migration("20190920221740_addview")]
+    partial class addview
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,6 +92,22 @@ namespace SamuraiApp.Data.Migrations
                     b.HasIndex("BattleId");
 
                     b.ToTable("SamuraiBattle");
+                });
+
+            modelBuilder.Entity("SamuraiApp.Domain.SamuraiStat", b =>
+                {
+                    b.Property<int>("SamuraiId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EarliestBattle");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("NumberOfBattles");
+
+                    b.HasKey("SamuraiId");
+
+                    b.ToTable("SamuraiBattleStats");
                 });
 
             modelBuilder.Entity("SamuraiApp.Domain.SecretIdentity", b =>

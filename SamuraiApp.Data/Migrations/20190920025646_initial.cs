@@ -16,7 +16,9 @@ namespace SamuraiApp.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(type: "Date", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "Date", nullable: false)
+                    EndDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +31,13 @@ namespace SamuraiApp.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    SurName = table.Column<string>(nullable: true),
+                    GivenName = table.Column<string>(nullable: true),
+                    BetterName_Created = table.Column<DateTime>(nullable: false),
+                    BetterName_LastModified = table.Column<DateTime>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,7 +51,9 @@ namespace SamuraiApp.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(nullable: true),
-                    SamuraiId = table.Column<int>(nullable: false)
+                    SamuraiId = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +71,9 @@ namespace SamuraiApp.Data.Migrations
                 columns: table => new
                 {
                     SamuraiId = table.Column<int>(nullable: false),
-                    BattleId = table.Column<int>(nullable: false)
+                    BattleId = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,7 +99,9 @@ namespace SamuraiApp.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RealName = table.Column<string>(nullable: true),
-                    SamuraiId = table.Column<int>(nullable: false)
+                    SamuraiId = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SamuraiApp.Domain
 {
     public class Samurai
     {
+        public Samurai()
+        {
+            Quotes = new List<Quote>();
+            SamuraiBattles = new List<SamuraiBattle>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Quote> Quotes { get; set; }
         public PersonFullName BetterName { get; set; }
-        //many to many relationship
+        public List<Quote> Quotes { get; set; }
+         
+         //many to many relationship
         public List<SamuraiBattle> SamuraiBattles { get; set; }
 
         //one to one relationship, since the secret entity doesn't even exists without the samurai
@@ -20,7 +26,7 @@ namespace SamuraiApp.Domain
         public SecretIdentity SecretIdentity { get; set; }
 
 
-        //approach to get the grandchild Battles directly
+         //approach to get the grandchild Battles directly
         public List<Battle> Battles()
         {
             var battles = new List<Battle>();
@@ -30,12 +36,6 @@ namespace SamuraiApp.Domain
                 battles.Add(item.Battle);
             }
             return battles;
-        }
-
-        public Samurai()
-        {
-            Quotes = new List<Quote>();
-            SamuraiBattles= new List<SamuraiBattle>();
         }
     }
 }

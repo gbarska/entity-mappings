@@ -16,11 +16,11 @@ namespace SamuraiApp.UI
     
         static void Main(string[] args)
         {
-            
-            //PrePopulateSamuraisAndBattles();
+            GetAllSamurais();
+            // PrePopulateSamuraisAndBattles();
             //JoinBattleAndSamurai();
-            //EnlistSamuraiIntoABattle();
-            //EnlistSamuraiIntoABattleUntracked();
+            // EnlistSamuraiIntoABattle();
+            // EnlistSamuraiIntoABattleUntracked();
             //AddNewSamuraiViaDisconnectedBattleObject();
             //GetSamuraiWithBattles();
             //GetBattlesForSamuraiInMemory();
@@ -36,9 +36,88 @@ namespace SamuraiApp.UI
             //ReplaceSecretIdentityNotInMemory();
             // CreateSamuraiWithBetterName();
             //  ReplaceBetterName();
-            CreateAndFixUpNullBetterName();
+            // CreateAndFixUpNullBetterName();
+
+            //  RetrieveScalarResult();
+            //FilterWithScalarResult();
+            //SortWithScalar();
+            //SortWithoutReturningScalar();
+            //RetrieveBattleDays();
+            //RetrieveBattleDaysWithoutDbFunction();
+
+            // _context.SamuraiBattleStats.ToList();
         }
 
+        private static void GetStats()
+        {
+            var stats = _context.SamuraiBattleStats.AsNoTracking().ToList();
+        }
+        private static void Filter()
+        {
+            var stats = _context.SamuraiBattleStats.Where(s => s.SamuraiId == 2).AsNoTracking().ToList();
+        }
+        private static void Project()
+        {
+            var stats = _context.SamuraiBattleStats.AsNoTracking().Select(s => new { s.Name, s.NumberOfBattles }).ToList();
+        }
+        private static void RetrieveYearUsingDbBuiltInFunction()
+        {
+           var battles=_context.Battles
+                .Select(b=>new { b.Name, b.StartDate.Year }).ToList();
+        }
+
+        private static void RetrieveScalarResult()
+        {
+            var samurais = _context.Samurais
+                .Select(s => new
+                {
+                    s.Name,
+                    EarliestBattle = AppDbContext.EarliestBattleFoughtBySamurai(s.Id)
+                })
+                .ToList();
+        }
+        private static void FilterWithScalarResult()
+        {
+            var samurais = _context.Samurais
+                    .Where(s => EF.Functions.Like(AppDbContext.EarliestBattleFoughtBySamurai(s.Id), "%Battle%"))
+                    .Select(s => new
+                    {
+                        s.Name,
+                        EarliestBattle = AppDbContext.EarliestBattleFoughtBySamurai(s.Id)
+                    })
+                   .ToList();
+        }
+        private static void SortWithScalar()
+        {
+            var samurais = _context.Samurais
+                 .OrderBy(s => AppDbContext.EarliestBattleFoughtBySamurai(s.Id))
+                 .Select(s => new { s.Name, EarliestBattle = AppDbContext.EarliestBattleFoughtBySamurai(s.Id) })
+                 .ToList();
+        }
+        private static void SortWithoutReturningScalar()
+        {
+            var samurais = _context.Samurais
+                 .OrderBy(s => AppDbContext.EarliestBattleFoughtBySamurai(s.Id))
+                 .ToList();
+        }
+        private static void RetrieveBattleDays()
+        {
+            var battles = _context.Battles.Select(b => new { b.Name, Days = AppDbContext.DaysInBattle(b.StartDate, b.EndDate) }).ToList();
+        }
+
+        private static void RetrieveBattleDaysWithoutDbFunction()
+        {
+            var battles = _context.Battles.Select(
+                b => new {
+                    b.Name,
+                    Days = DateDiffDaysPlusOne(b.StartDate, b.EndDate)
+                }
+                ).ToList();
+        }
+        private static int DateDiffDaysPlusOne(DateTime start, DateTime end)
+        {
+            return (int)end.Subtract(start).TotalDays + 1;
+        }
     private static void CreateSamuraiWithBetterName()
         {
             var samurai = new Samurai
@@ -46,23 +125,27 @@ namespace SamuraiApp.UI
                 Name = "Jack le Black",
                 BetterName = PersonFullName.Create("Jack", "Black")
             };
+
+            var person=  PersonFullName.Create("bla","nla");
+            samurai.BetterName= person;
+
             _context.Samurais.Add(samurai);
             _context.SaveChanges();
         }
 
         private static void CreateAndFixUpNullBetterName()
         {
-            _context.Samurais.Add(new Samurai { Name = "Chrisjen" });
+            _context.Samurais.Add(new Samurai { Name = "bob"});
             _context.SaveChanges();
-            // _context = new AppDbContext();
+            _context = new AppDbContext();
             
-            // var persistedSamurai = _context.Samurais.FirstOrDefault(s => s.Name == "Chrisjen");
+            var persistedSamurai = _context.Samurais.FirstOrDefault(s => s.Name == "Chrisjen");
             
-            // if (persistedSamurai is null) { return; }
-            // if (persistedSamurai.BetterName.IsEmpty())
-            // {
-            //     persistedSamurai.BetterName = null;
-            // }
+            if (persistedSamurai is null) { return; }
+            if (persistedSamurai.BetterName.IsEmpty())
+            {
+                persistedSamurai.BetterName = null;
+            }
         }
     
         private static void ReplaceBetterName()

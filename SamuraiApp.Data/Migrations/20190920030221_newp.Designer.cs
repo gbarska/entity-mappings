@@ -9,8 +9,8 @@ using SamuraiApp.Data;
 namespace SamuraiApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190919134139_initial")]
-    partial class initial
+    [Migration("20190920030221_newp")]
+    partial class newp
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,8 +24,12 @@ namespace SamuraiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("Created");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("Date");
+
+                    b.Property<DateTime>("LastModified");
 
                     b.Property<string>("Name");
 
@@ -41,6 +45,10 @@ namespace SamuraiApp.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("LastModified");
 
                     b.Property<int>("SamuraiId");
 
@@ -58,6 +66,10 @@ namespace SamuraiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("LastModified");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -71,6 +83,10 @@ namespace SamuraiApp.Data.Migrations
 
                     b.Property<int>("BattleId");
 
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("LastModified");
+
                     b.HasKey("SamuraiId", "BattleId");
 
                     b.HasIndex("BattleId");
@@ -82,6 +98,10 @@ namespace SamuraiApp.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("LastModified");
 
                     b.Property<string>("RealName");
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SamuraiApp.Data.Migrations
 {
-    public partial class ownedtypes : Migration
+    public partial class old : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

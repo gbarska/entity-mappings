@@ -9,8 +9,8 @@ using SamuraiApp.Data;
 namespace SamuraiApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190920002455_shadowprops")]
-    partial class shadowprops
+    [Migration("20190920025646_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,6 +121,33 @@ namespace SamuraiApp.Data.Migrations
                         .WithMany("Quotes")
                         .HasForeignKey("SamuraiId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SamuraiApp.Domain.Samurai", b =>
+                {
+                    b.OwnsOne("SamuraiApp.Domain.PersonFullName", "BetterName", b1 =>
+                        {
+                            b1.Property<int>("SamuraiId");
+
+                            b1.Property<DateTime>("Created");
+
+                            b1.Property<string>("GivenName")
+                                .HasColumnName("GivenName");
+
+                            b1.Property<DateTime>("LastModified");
+
+                            b1.Property<string>("SurName")
+                                .HasColumnName("SurName");
+
+                            b1.HasKey("SamuraiId");
+
+                            b1.ToTable("Samurais");
+
+                            b1.HasOne("SamuraiApp.Domain.Samurai")
+                                .WithOne("BetterName")
+                                .HasForeignKey("SamuraiApp.Domain.PersonFullName", "SamuraiId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("SamuraiApp.Domain.SamuraiBattle", b =>

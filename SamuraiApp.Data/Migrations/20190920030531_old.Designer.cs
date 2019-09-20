@@ -9,8 +9,8 @@ using SamuraiApp.Data;
 namespace SamuraiApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190920011102_ownedtypes")]
-    partial class ownedtypes
+    [Migration("20190920030531_old")]
+    partial class old
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

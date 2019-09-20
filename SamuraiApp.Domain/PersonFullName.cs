@@ -1,26 +1,14 @@
-using System;
 using System.Collections.Generic;
 
 namespace SamuraiApp.Domain
 {
-     public class PersonFullName
+    public class PersonFullName
     {
-        //this class is a value object, it doesn't have a Id key for  EF
-        //setters are private to ensure data is sent through constructors
-        //it is handled by EF as an owned type
-        public string SurName { get; private set; }
-        public string GivenName { get; private set; }
-        public string FullName => $"{GivenName} {SurName}";
-        public string FullNameReverse => $"{SurName}, {GivenName}";   
-
-        //private parameterless constructor REQUIRED to be used by EF with reflection 
-        private PersonFullName() { }
         public static PersonFullName Create(string givenName, string surName)
         {
             return new PersonFullName(givenName, surName);
         }
-
-        //this method was created to overcome the known problem with owned types,
+          //this method was created to overcome the known problem with owned types,
         //OWNED TYPES cannot be null at persistency time, otherwise EF will throw an error
         public static PersonFullName Empty()
         {
@@ -31,7 +19,18 @@ namespace SamuraiApp.Domain
             SurName = surName;
             GivenName = givenName;
         }
-        public bool IsEmpty()
+          //private parameterless constructor REQUIRED to be used by EF with reflection 
+        private PersonFullName() { }
+
+        //this class is a value object, it doesn't have a Id key for  EF
+        //setters are private to ensure data is sent through constructors
+        //it is handled by EF as an owned type
+        public string SurName { get; private set; }
+        public string GivenName { get; private set; }
+        public string FullName => $"{GivenName} {SurName}";
+        public string FullNameReverse => $"{SurName}, {GivenName}";
+
+         public bool IsEmpty()
         {
             return SurName == "" & GivenName == "";
         }
@@ -44,7 +43,7 @@ namespace SamuraiApp.Domain
                    GivenName == name.GivenName;
         }
 
-        public override int GetHashCode()
+         public override int GetHashCode()
         {
             var hashCode = -1052426677;
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SurName);
@@ -52,7 +51,7 @@ namespace SamuraiApp.Domain
             return hashCode;
         }
 
-        public static bool operator == (PersonFullName name1, PersonFullName name2)
+         public static bool operator ==(PersonFullName name1, PersonFullName name2)
         {
             return EqualityComparer<PersonFullName>.Default.Equals(name1, name2);
         }
