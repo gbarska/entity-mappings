@@ -1,0 +1,9 @@
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/bin/Debug/netcoreapp2.0/SauraiApp.Domain.deps.json
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/bin/Debug/netcoreapp2.0/SauraiApp.Domain.dll
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/bin/Debug/netcoreapp2.0/SauraiApp.Domain.pdb
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/obj/Debug/netcoreapp2.0/SauraiApp.Domain.csprojAssemblyReference.cache
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/obj/Debug/netcoreapp2.0/SauraiApp.Domain.csproj.CoreCompileInputs.cache
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/obj/Debug/netcoreapp2.0/SauraiApp.Domain.AssemblyInfoInputs.cache
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/obj/Debug/netcoreapp2.0/SauraiApp.Domain.AssemblyInfo.cs
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/obj/Debug/netcoreapp2.0/SauraiApp.Domain.dll
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/obj/Debug/netcoreapp2.0/SauraiApp.Domain.pdb

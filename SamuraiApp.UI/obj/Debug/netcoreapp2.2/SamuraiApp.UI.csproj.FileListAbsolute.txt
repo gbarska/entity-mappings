@@ -1,0 +1,16 @@
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SamuraiApp.UI.deps.json
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SamuraiApp.UI.runtimeconfig.json
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SamuraiApp.UI.runtimeconfig.dev.json
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SamuraiApp.UI.dll
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SamuraiApp.UI.pdb
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SauraiApp.Domain.dll
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SauraiApp.Domain.pdb
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/obj/Debug/netcoreapp2.2/SamuraiApp.UI.csprojAssemblyReference.cache
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/obj/Debug/netcoreapp2.2/SamuraiApp.UI.csproj.CoreCompileInputs.cache
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/obj/Debug/netcoreapp2.2/SamuraiApp.UI.AssemblyInfoInputs.cache
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/obj/Debug/netcoreapp2.2/SamuraiApp.UI.AssemblyInfo.cs
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/obj/Debug/netcoreapp2.2/SamuraiApp.UI.csproj.CopyComplete
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/obj/Debug/netcoreapp2.2/SamuraiApp.UI.dll
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/obj/Debug/netcoreapp2.2/SamuraiApp.UI.pdb
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SamuraiApp.Data.dll
+/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.UI/bin/Debug/netcoreapp2.2/SamuraiApp.Data.pdb

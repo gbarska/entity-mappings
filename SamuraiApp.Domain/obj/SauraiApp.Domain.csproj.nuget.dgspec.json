@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/SauraiApp.Domain.csproj": {}
+  },
+  "projects": {
+    "/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/SauraiApp.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/SauraiApp.Domain.csproj",
+        "projectName": "SauraiApp.Domain",
+        "projectPath": "/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/SauraiApp.Domain.csproj",
+        "packagesPath": "/home/gbarska/.nuget/packages/",
+        "outputPath": "/home/gbarska/Github/ASPNET/entity-mappings/entity-mappings/SamuraiApp.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/gbarska/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.0": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
